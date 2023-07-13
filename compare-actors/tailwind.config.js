@@ -13,6 +13,22 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        hithere: {
+          "30%": { transform: "scale(1.1)" },
+          "40%, 60%": { transform: "rotate(-5deg) scale(1.1)" },
+          "50%": { transform: "rotate(5deg) scale(1.1)" },
+          "70%": { transform: "rotate(0deg) scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        hithere: "hithere 0.8s ease-in-out",
+      },
+      boxShadow: {
+        solidPrimary: "2px 4px rgb(0,0,0)",
+        solidPrimaryHover: "1px 2px rgb(0,0,0)",
+      },
     },
   },
   plugins: [],
