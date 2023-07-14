@@ -11,8 +11,7 @@ import React, {
 import { IMovieItem, ICastItem, ICrewItem } from "../types";
 import MovieCard from "./movieCard";
 import CastCard from "./castCard";
-import { FiSearch } from "react-icons/fi";
-import { collectGenerateParams } from "next/dist/build/utils";
+import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const API_KEY = "bf785a67cbc0a98afb01a72416ac416b";
 
@@ -49,14 +48,20 @@ const castTest: ICastItem = {
   order: 0,
 };
 
-const MovieSearch = () => {
+const MainComponent = () => {
   const [movies, setMovies] = useState<IMovieItem[]>([]);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<IMovieItem[]>([]);
   const [commonCastMembers, setCommonCastMembers] = useState<ICastItem[]>([]);
 
-  const scrollBarRef: RefObject<HTMLUListElement> = useRef(null);
+  // This is a workaround for displaying the cast only when compared button is clicked
+  // the whole functionality should probably be extracted into a separate component
+  // with a useEffect hook that would fetch the cast members only when the button is clicked
+  const [compared, setCompared] = useState<boolean>(false);
+
+  // const scrollBarRef: RefObject<HTMLUListElement> = useRef(null);
+  const scrollBarRef = useHorizontalScroll();
 
   const slide = (shift: any) => {
     if (scrollBarRef.current) {
@@ -70,6 +75,26 @@ const MovieSearch = () => {
 
     fetchSuggestions(value);
   };
+
+  function useHorizontalScroll() {
+    const elRef: RefObject<HTMLUListElement> = useRef(null);
+    useEffect(() => {
+      const el = elRef.current;
+      if (el) {
+        const onWheel = (e: any) => {
+          if (e.deltaY == 0) return;
+          e.preventDefault();
+          el.scrollTo({
+            left: el.scrollLeft + e.deltaY,
+            // behavior: "smooth",
+          });
+        };
+        el.addEventListener("wheel", onWheel);
+        return () => el.removeEventListener("wheel", onWheel);
+      }
+    }, []);
+    return elRef;
+  }
 
   const fetchSuggestions = useCallback(async (value: string) => {
     const response = await fetch(
@@ -130,11 +155,18 @@ const MovieSearch = () => {
       });
       console.log("filtered cAst: ", filteredCast);
       setCommonCastMembers(filteredCast);
+      setCompared(true);
     } catch (error) {
       console.error("Failed to filter cast members:", error);
       setCommonCastMembers([]);
     }
   };
+
+  useEffect(() => {
+    if (movies.length < 2) {
+      setCompared(false);
+    }
+  }, [movies]);
 
   useEffect(() => {
     console.log("Updated common cast members:", commonCastMembers);
@@ -158,8 +190,7 @@ const MovieSearch = () => {
         setmovies={setMovies}
         setsearchterm={setSearchTerm}
       /> */}
-
-      <div className="flex items-start justify-center  rounded w-full">
+      <div className="flex items-start justify-center w-full">
         <div className="flex flex-col gap-2 w-full px-10">
           <div className="flex w-full justify-center">
             <div className="w-[500px] bg-blue-200 flex  relative">
@@ -176,6 +207,7 @@ const MovieSearch = () => {
               </div>
             </div>
           </div>
+
           <ul
             ref={scrollBarRef}
             className="flex flex-row items-center gap-2 h-auto overflow-scroll w-full"
@@ -213,22 +245,59 @@ const MovieSearch = () => {
               );
             })}
           </ul>
-          <div className="flex w-full h-auto bg-green-200 justify-between">
-            <button onClick={() => slide(-150)}>left</button>
-            <button onClick={() => slide(+150)}>right</button>
-          </div>
+          {suggestions.length === 0 ? null : (
+            <div className="flex w-full h-auto justify-center gap-5">
+              <button onClick={() => slide(-150)}>
+                <FiChevronLeft />
+              </button>
+              <button onClick={() => slide(+150)}>
+                <FiChevronRight />
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      {/* TODO: allow users to use the mouse wheel to scroll horizontally when hovering over the list */}
-      {movies.length < 2 ? null : (
+      {(() => {
+        if (movies.length < 2) {
+          return null;
+        } else {
+          return (
+            <button
+              onClick={filteredCastMembers}
+              className="px-4 py-2 bg-white rounded-xl text-black border-2 border-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
+            >
+              Compare
+            </button>
+          );
+        }
+      })()}
+
+      {(() => {
+        if (commonCastMembers.length === 0 && movies.length >= 2 && compared) {
+          return (
+            <div className="text-black text-lg font-bold px-10 py-10">
+              No Common Cast Members!
+            </div>
+          );
+        } else {
+          return (
+            <ul>
+              {commonCastMembers.map((castMember) => {
+                return <CastCard key={castMember.id} castMember={castMember} />;
+              })}
+            </ul>
+          );
+        }
+      })()}
+      {/* {movies.length < 2 ? null : (
         <button
           onClick={filteredCastMembers}
           className="px-4 py-2 bg-white rounded-xl text-black border-2 border-black shadow-solidPrimary"
         >
           Compare
         </button>
-      )}
-      {commonCastMembers.length === 0 ? (
+      )} */}
+      {/* {commonCastMembers.length === 0 ? (
         <div className="text-black text-lg font-bold px-10 py-10">
           No Common Cast Members!
         </div>
@@ -238,8 +307,7 @@ const MovieSearch = () => {
             return <CastCard key={castMember.id} castMember={castMember} />;
           })}
         </ul>
-      )}
-
+      )} */}
       {/* <div>
         <CastCard castMember={castTest} />
       </div> */}
@@ -247,4 +315,4 @@ const MovieSearch = () => {
   );
 };
 
-export default MovieSearch;
+export default MainComponent;
