@@ -12,6 +12,10 @@ import { IMovieItem, ICastItem, ICrewItem } from "../types";
 import MovieCard from "./movieCard";
 import CastCard from "./castCard";
 import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { gochi } from "@/app/layout";
+import SearchArrowText from "./seachArrow";
+import ShowArrowText from "./showArrow";
+import ResultsBubbleText from "./resultsBubble";
 
 const API_KEY = "bf785a67cbc0a98afb01a72416ac416b";
 
@@ -193,7 +197,10 @@ const MainComponent = () => {
       <div className="flex items-start justify-center w-full">
         <div className="flex flex-col gap-2 w-full px-10">
           <div className="flex w-full justify-center">
-            <div className="w-[500px] bg-blue-200 flex  relative">
+            <div className="w-[500px] flex  relative">
+              <div className="absolute left-[-12rem] top-[-1rem]">
+                <SearchArrowText />
+              </div>
               <input
                 type="text"
                 name="movieName"
@@ -205,9 +212,11 @@ const MainComponent = () => {
               <div className="absolute right-[20px] bottom-2 bg-white w-14 h-14 flex items-center justify-center rounded-full border-[3px] border-black px-2 py-2">
                 <FiSearch size={"2em"} />
               </div>
+              <div className="absolute right-[-6rem]">
+                <ShowArrowText />
+              </div>
             </div>
           </div>
-
           <ul
             ref={scrollBarRef}
             className="flex flex-row items-center gap-2 h-auto overflow-scroll w-full"
@@ -257,17 +266,23 @@ const MainComponent = () => {
           )}
         </div>
       </div>
+
       {(() => {
         if (movies.length < 2) {
           return null;
         } else {
           return (
-            <button
-              onClick={filteredCastMembers}
-              className="px-4 py-2 bg-white rounded-xl text-black border-2 border-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
-            >
-              Compare
-            </button>
+            <div>
+              <div className="absolute bottom-[35rem] left-56">
+                <ResultsBubbleText />
+              </div>
+              <button
+                onClick={filteredCastMembers}
+                className="px-4 py-2 bg-white rounded-xl text-black border-2 border-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
+              >
+                Compare
+              </button>
+            </div>
           );
         }
       })()}

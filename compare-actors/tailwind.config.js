@@ -7,6 +7,11 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      gochi: "var(--font-gochi)",
+      inter: "var(--font-inter)",
+      archivo: "var(--font-archivo)",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

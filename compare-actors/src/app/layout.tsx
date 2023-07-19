@@ -1,8 +1,12 @@
 import "./globals.css";
-import { Inter, Archivo } from "next/font/google";
+import { Inter, Archivo, Gochi_Hand } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
-const archivo = Archivo({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo" });
+export const gochi = Gochi_Hand({
+  weight: "400",
+  variable: "--font-gochi",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={archivo.className}>{children}</body>
+      <body
+        className={`${inter.variable} ${archivo.variable} ${gochi.variable}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
