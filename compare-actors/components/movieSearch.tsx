@@ -273,9 +273,6 @@ const MainComponent = () => {
         } else {
           return (
             <div>
-              <div className="absolute bottom-[35rem] left-56">
-                <ResultsBubbleText />
-              </div>
               <button
                 onClick={filteredCastMembers}
                 className="px-4 py-2 bg-white rounded-xl text-black border-2 border-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
@@ -294,16 +291,24 @@ const MainComponent = () => {
               No Common Cast Members!
             </div>
           );
-        } else {
+        } else if (movies.length >= 2 && compared) {
           return (
-            <ul>
-              {commonCastMembers.map((castMember) => {
-                return <CastCard key={castMember.id} castMember={castMember} />;
-              })}
-            </ul>
+            <div className="relative py-5">
+              <div className="absolute left-[-25rem] top-0">
+                <ResultsBubbleText />
+              </div>
+              <ul>
+                {commonCastMembers.map((castMember) => {
+                  return (
+                    <CastCard key={castMember.id} castMember={castMember} />
+                  );
+                })}
+              </ul>
+            </div>
           );
         }
       })()}
+
       {/* {movies.length < 2 ? null : (
         <button
           onClick={filteredCastMembers}
