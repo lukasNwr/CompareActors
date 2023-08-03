@@ -18,3 +18,4 @@ is a little bit annoying -> therefore this simple app.
 - Support for comparing actors and showing the movies they played in together (displaying the layout, maaking the slider functional)
 - Support for also filtering the cast other than actors
 - Support for displaying basic information about Movies/Actors
+- **NewIdea** - when user adds the movie into the list, instead of just letting it be where it is (and obstructing view - mainly on mobile - of newly searched titles), it would shrink in size and move into "small" list on the side of the screen/part of the screen.
