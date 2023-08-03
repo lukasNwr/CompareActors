@@ -4,6 +4,7 @@ import { Inter, Archivo, Gochi_Hand } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo" });
 export const gochi = Gochi_Hand({
+  subsets: ["latin"],
   weight: "400",
   variable: "--font-gochi",
 });
