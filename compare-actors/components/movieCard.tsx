@@ -57,13 +57,13 @@ const MovieCard = ({
   return (
     <div className="relative" id={`${movie.id}`}>
       <div
-        className="flex flex-col justify-end w-64 h-80 rounded-3xl overflow-hidden bg-center bg-cover border-black border-[3px] shadow-black shadow-solidPrimary"
+        className="flex flex-col justify-end w-52 h-72 md:w-64 md:h-80 rounded-3xl overflow-hidden bg-center bg-cover border-black border-[3px] shadow-black shadow-solidPrimary"
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w500${movie.poster_path}')`,
         }}
       >
         <div className="flex flex-col px-5 py-2.5 justify-center h-20 w-full bg-black rounded-2xl">
-          <div className="text-white text-xl font-normal truncate">
+          <div className="text-white text-lg md:text-xl font-normal truncate">
             {movie.title}
           </div>
           <div className="text-white text-sm font-thin">{formattedDate}</div>
@@ -72,7 +72,7 @@ const MovieCard = ({
       {!selected ? (
         <button
           onClick={handleAddMovie}
-          className="px-4 py-2 bg-yellow-300 absolute right-5 top-[19rem] rounded-xl border-black border-2 shadow-black shadow-solidPrimary  hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover duration-200 
+          className="px-4 py-2 bg-yellow-300 absolute right-5 top-[17rem] md:top-[19rem] rounded-xl border-black border-2 shadow-black shadow-solidPrimary  hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover duration-200 
 ease-out transition transform origin-top-right"
         >
           <span>Add</span>
@@ -80,7 +80,7 @@ ease-out transition transform origin-top-right"
       ) : (
         <button
           onClick={handleRemoveMovie}
-          className="px-4 py-2 bg-orange-600 text-white absolute right-5 top-[19rem] rounded-xl border-black border-2 shadow-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
+          className="px-4 py-2 bg-orange-600 text-white absolute right-5 top-[17rem] md:top-[19rem] rounded-xl border-black border-2 shadow-black shadow-solidPrimary hover:translate-x-[0.12rem] hover:translate-y-[0.12rem] hover:shadow-solidPrimaryHover"
         >
           <span>Remove</span>
         </button>

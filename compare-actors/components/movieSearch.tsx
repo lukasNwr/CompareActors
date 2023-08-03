@@ -195,24 +195,24 @@ const MainComponent = () => {
         setsearchterm={setSearchTerm}
       /> */}
       <div className="flex items-start justify-center w-full">
-        <div className="flex flex-col gap-2 w-full px-10">
+        <div className="flex flex-col gap-2 w-full px-5 md:px-10">
           <div className="flex w-full justify-center">
-            <div className="w-[500px] flex  relative">
-              <div className="absolute left-[-12rem] top-[-1rem]">
+            <div className="w-[300px] md:w-[500px] flex  relative">
+              <div className="hidden lg:block absolute left-[-12rem] top-[-1rem]">
                 <SearchArrowText />
               </div>
               <input
                 type="text"
                 name="movieName"
-                className="outline-none border-[3px] border-black rounded-md py-3 px-6 w-[500px] bg-white placeholder:text-black placeholder:font-medium placeholder:text-xl shadow-black shadow-solidPrimary"
+                className="outline-none border-[3px] border-black rounded-md py-3 px-6 w-[300px] md:w-[500px] bg-white placeholder:text-black placeholder:font-medium placeholder:text-xl shadow-black shadow-solidPrimary"
                 placeholder="Seearch..."
                 value={searchTerm}
                 onChange={handleChange}
               />
-              <div className="absolute right-[20px] bottom-2 bg-white w-14 h-14 flex items-center justify-center rounded-full border-[3px] border-black px-2 py-2">
+              <div className="absolute right-[20px] bottom-3 md:bottom-2 bg-white w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-[3px] border-black px-2 py-2">
                 <FiSearch size={"2em"} />
               </div>
-              <div className="absolute right-[-6rem]">
+              <div className="absolute right-[-6rem] hidden lg:block">
                 <ShowArrowText />
               </div>
             </div>
@@ -224,7 +224,7 @@ const MainComponent = () => {
             {movies?.map((movie) => {
               return (
                 <>
-                  <div className="px-5 py-24">
+                  <div className="px-2 md:px-5 py-12 md:py-24">
                     <MovieCard
                       key={movie.id}
                       selected={true}
@@ -240,7 +240,7 @@ const MainComponent = () => {
             {suggestions?.map((suggestion) => {
               return (
                 <>
-                  <div className="px-5 py-24">
+                  <div className="px-2 py-12 md:px-5 md:py-24">
                     <MovieCard
                       key={suggestion.id}
                       selected={false}
@@ -257,10 +257,10 @@ const MainComponent = () => {
           {suggestions.length === 0 ? null : (
             <div className="flex w-full h-auto justify-center gap-5">
               <button onClick={() => slide(-150)}>
-                <FiChevronLeft />
+                <FiChevronLeft size={30} />
               </button>
               <button onClick={() => slide(+150)}>
-                <FiChevronRight />
+                <FiChevronRight size={30} />
               </button>
             </div>
           )}
