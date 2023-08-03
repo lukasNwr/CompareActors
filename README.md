@@ -14,7 +14,7 @@ is a little bit annoying -> therefore this simple app.
 
 ## To Do
 
-- **Responsivenes**
+- **Responsivenes** - partially implemented, but still could use more work
 - Support for comparing actors and showing the movies they played in together (displaying the layout, maaking the slider functional)
 - Support for also filtering the cast other than actors
 - Support for displaying basic information about Movies/Actors
