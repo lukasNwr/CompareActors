@@ -1,3 +1,8 @@
+export type AMSelectorContextType = {
+  searchType: "movie" | "actor";
+  setSearchType: (searchType: "moviw" | "actor") => {};
+};
+
 export interface IMovieItem {
   adult: boolean;
   backdrop_path: string | null;

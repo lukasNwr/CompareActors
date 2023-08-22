@@ -1,5 +1,5 @@
 import TopBarBounceText from "./topBarBounce";
-import actorMovieSelector from "./actorMovieSelector";
+import ActorMovieSelector from "./actorMovieSelector";
 
 const Topbar = () => {
   return (
@@ -9,7 +9,9 @@ const Topbar = () => {
         <div className="hidden md:block">
           <TopBarBounceText />
         </div>
-        <div className="hidden md:block">{actorMovieSelector}</div>
+        <div className="hidden md:block">
+          <ActorMovieSelector />
+        </div>
       </div>
     </div>
   );

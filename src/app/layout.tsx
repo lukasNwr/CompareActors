@@ -1,8 +1,23 @@
+"use client";
+import * as React from "react";
 import "./globals.css";
 import { Inter, Archivo, Gochi_Hand } from "next/font/google";
+import { useState } from "react";
+import { createContext } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo" });
+
+export const AMSelectorContext = createContext({
+  selected: "movie",
+  setSelected: (selected: "movie" | "actor") => {},
+});
+
+export const LoginContext = createContext({
+  loggedIn: false,
+  setLoggedIn: (loggedIn: false) => {},
+});
+
 export const gochi = Gochi_Hand({
   subsets: ["latin"],
   weight: "400",
@@ -19,12 +34,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [selected, setSelected] = useState<"movie" | "actor">("movie");
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${archivo.variable} ${gochi.variable}`}
       >
-        {children}
+        <AMSelectorContext.Provider value={{ selected, setSelected }}>
+          {children}
+        </AMSelectorContext.Provider>
       </body>
     </html>
   );

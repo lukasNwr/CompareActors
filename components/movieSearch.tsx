@@ -62,11 +62,12 @@ const MainComponent = () => {
   // This is a workaround for displaying the cast only when compared button is clicked
   // the whole functionality should probably be extracted into a separate component
   // with a useEffect hook that would fetch the cast members only when the button is clicked
+  // ADDON to commend: WTF?
   const [compared, setCompared] = useState<boolean>(false);
 
-  // const scrollBarRef: RefObject<HTMLUListElement> = useRef(null);
   const scrollBarRef = useHorizontalScroll();
 
+  // Helper function for shofting the elements in the scroll bar (horizontaly) on click
   const slide = (shift: any) => {
     if (scrollBarRef.current) {
       scrollBarRef.current.scrollLeft += shift;
@@ -115,23 +116,11 @@ const MainComponent = () => {
       );
       const data = await res.json();
       const cast = data?.cast;
+      console.log("CAST: " + cast);
+
       return cast as ICastItem[];
     } catch (error) {
       console.error(`Failed to fetch cast for movie ${movie.id}:`, error);
-      return [];
-    }
-  };
-
-  const fetchCrew = async (movie: IMovieItem) => {
-    try {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=bf785a67cbc0a98afb01a72416ac416b&language=en-US&page=1&api_key=${API_KEY}`
-      );
-      const data = await res.json();
-      const crew = data?.crew;
-      return crew as ICrewItem[];
-    } catch (error) {
-      console.error(`Failed to fetch crew for movie ${movie.id}:`, error);
       return [];
     }
   };
@@ -157,7 +146,7 @@ const MainComponent = () => {
         const commonIds = accIds.filter((id) => currIds.includes(id));
         return acc.filter((castMember) => commonIds.includes(castMember.id));
       });
-      console.log("filtered cAst: ", filteredCast);
+      console.log("filtered cast: ", filteredCast);
       setCommonCastMembers(filteredCast);
       setCompared(true);
     } catch (error) {
